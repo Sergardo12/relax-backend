@@ -1,0 +1,48 @@
+version: "3.9"
+
+services:
+  app:
+  #Le dice a Docker que use tu Dockerfile.
+    build: .
+    container_name: relax-backend
+    ports:
+      - "3000:3000"
+    depends_on: #Espera a que el contenedor de PostgreSQL esté listo.
+      - db
+    environment: #Define las variables de entorno para conectar tu Nest a Postgres.
+      - DATABASE_HOST=${DATABASE_HOST}
+      - DATABASE_PORT=${DATABASE_PORT}
+      - DATABASE_USER=${DATABASE_USER}
+      - DATABASE_PASSWORD=${DATABASE_PASSWORD}
+      - DATABASE_NAME=${DATABASE_NAME}
+    volumes: #Sincroniza tu código local con el contenedor y persiste la base de datos.
+      - .:/app
+      - /app/node_modules
+    command: yarn start:dev #Lanza tu app en modo desarrollo con Hot Reload (yarn start:dev).
+
+  db:
+    image: postgres:15
+    container_name: relax-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: relaxdb
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  pgadmin:
+    image: dpage/pgadmin4
+    container_name: relax-pgadmin
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_EMAIL}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_PASSWORD}
+    ports:
+    - "8080:80"
+    depends_on:
+    - db
+volumes:
+  pgdata:
