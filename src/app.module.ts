@@ -3,6 +3,9 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsuarioController } from './modules/usuario/infrastructure/usuario.controller';
+import { UsuarioModule } from './modules/usuario/usuario.module';
+
 
 
 @Module({
@@ -22,7 +25,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       database: process.env.DATABASE_NAME,
       autoLoadEntities: true,
       synchronize: true,
-    })
+    }),
+    UsuarioModule
   ],
   controllers: [AppController],
   providers: [AppService],

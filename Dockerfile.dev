@@ -1,0 +1,12 @@
+# Dockerfile.dev
+FROM node:20
+
+WORKDIR /app
+
+COPY package.json yarn.lock ./
+RUN yarn install
+
+COPY . .
+
+# No hacemos build, usamos ts-node
+CMD ["yarn", "start:dev"]
