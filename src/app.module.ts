@@ -33,7 +33,3 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
   providers: [AppService],
 })
 export class AppModule {}
-
-// prueba de cambio Diego 
-
-// Este es un cambio de prueba realizado por Yarkoff
