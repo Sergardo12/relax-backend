@@ -13,13 +13,14 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
     //ConfigModule lee el archivo .env
 
     ConfigModule.forRoot({
-      isGlobal: true}),
-    
+      isGlobal: true
+    }),
+
     //TypeOrmModule se configura con las variables de entorno
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT?? '5432', 10),
+      port: parseInt(process.env.DATABASE_PORT ?? '5432', 10),
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
@@ -34,3 +35,5 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
 export class AppModule {}
 
 // prueba de cambio Diego 
+
+// Este es un cambio de prueba realizado por Yarkoff
