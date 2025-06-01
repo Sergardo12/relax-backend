@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { RolOrmEntity } from "../../../rol/infrastructure/database/rol.orm-entity";
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 
 
 
@@ -12,6 +13,12 @@ export class UsuarioOrmEntity {
 
     @Column()
     clave: string;
+    
+
+    //Foreignkey
+
+    @ManyToMany(() => RolOrmEntity, rol => rol.usuarios)
+    rol: RolOrmEntity
     
 }
 
