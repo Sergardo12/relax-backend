@@ -3,8 +3,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { UsuarioController } from './modules/usuario/infrastructure/usuario.controller';
 import { UsuarioModule } from './modules/usuario/usuario.module';
+import { RolModule } from './modules/rol/rol.module';
 
 
 
@@ -27,7 +27,8 @@ import { UsuarioModule } from './modules/usuario/usuario.module';
       autoLoadEntities: true,
       synchronize: true,
     }),
-    UsuarioModule
+    UsuarioModule,
+    RolModule
   ],
   controllers: [AppController],
   providers: [AppService],

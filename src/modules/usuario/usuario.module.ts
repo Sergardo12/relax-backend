@@ -4,9 +4,10 @@ import { UsuarioOrmEntity } from "./infrastructure/database/usuario.orm-entity";
 import { UsuarioController } from "./infrastructure/usuario.controller";
 import { CrearUsuarioUseCase } from "./application/use-cases/crear-usuario.use-case";
 import { USUARIO_REPOSITORY } from "./usuario.repository.token";
+import { RolModule } from "../rol/rol.module";
 
 @Module({
-    imports: [TypeOrmModule.forFeature([UsuarioOrmEntity])], // Aquí puedes agregar las entidades que necesites
+    imports: [TypeOrmModule.forFeature([UsuarioOrmEntity]), RolModule], // Aquí puedes agregar las entidades que necesites
     controllers: [UsuarioController],
     providers: [
         CrearUsuarioUseCase,
