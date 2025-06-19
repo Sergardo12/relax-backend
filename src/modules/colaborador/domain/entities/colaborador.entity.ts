@@ -1,14 +1,14 @@
+import { Usuario } from "../../../usuario/domain/entities/usuario.entity";
+
 export class Colaborador {
     constructor(
-        public readonly idColaborador: number | null,
-        public dni: string,
+        public readonly id: number | null,
+        public usuario: Usuario,
         public nombres: string,
         public apellidos: string,
+        public dni: string,
         public telefono: string,
-        public email: string,
-        public password_hash: string,
         public fecha_contratacion: Date,
-        public estado: string,
-        public tipo: string
+        public estadoColaborador: boolean,
     ) { }
 }

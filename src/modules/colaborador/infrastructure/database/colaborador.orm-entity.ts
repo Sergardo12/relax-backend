@@ -1,34 +1,35 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { CitaOrmEntity } from "../../../cita/infrastructure/database/cita.orm-entity";
+import { UsuarioOrmEntity } from "../../../usuario/infrastructure/database/usuario.orm-entity";
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('colaborador')
 export class ColaboradorOrmEntity {
-    @PrimaryGeneratedColumn()
-    idColaborador: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    dni: string;
+  @OneToOne(() => UsuarioOrmEntity, { eager: true }) // eager para traer automaticamente el usuario
+  @JoinColumn()
+  usuario: UsuarioOrmEntity;
 
-    @Column()
-    nombres: string;
+  @Column()
+  dni: string;
 
-    @Column()
-    apellidos: string;
+  @Column()
+  nombres: string;
 
-    @Column()
-    telefono: string;
+  @Column()
+  apellidos: string;
 
-    @Column()
-    email: string;
+  @Column()
+  telefono: string;
 
-    @Column()
-    password_hash: string;
+  @Column()
+  fecha_contratacion: Date;
 
-    @Column()
-    fecha_contratacion: Date;
-
-    @Column()
-    estado: string;
-
-    @Column()
-    tipo: string;
+  @Column({ default: true })
+  estadoColaborador: boolean;
+  
+  
+  @OneToMany(() => CitaOrmEntity, (cita) => cita.colaborador)
+  citas: CitaOrmEntity[];
 }

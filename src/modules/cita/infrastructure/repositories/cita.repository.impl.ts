@@ -19,4 +19,6 @@ export class CitaRepositoryImpl implements CitaRepository {
         const savedOrmEntity = await this.ormRepo.save(ormEntity);
         return CitaMapper.toDomain(savedOrmEntity);
     }
+
+    // Aquí podrías añadir métodos como buscarPorId, listarTodos, etc., si los necesitas luego
 }

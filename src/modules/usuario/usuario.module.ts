@@ -17,7 +17,7 @@ import { RolModule } from "../rol/rol.module";
             useClass: require('./infrastructure/repositories/usuario.repository.impl').UsuarioRepositoryImpl
         }
     ],
-    exports: [UsuarioModule]
+    exports: [USUARIO_REPOSITORY]
 })
 export class UsuarioModule {
     // Este módulo puede importar otros módulos, definir controladores y proveedores según sea necesario.

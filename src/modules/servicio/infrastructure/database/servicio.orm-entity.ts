@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { CitaOrmEntity } from "../../../cita//infrastructure/database/cita.orm-entity";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToMany } from "typeorm";
 
 @Entity('servicios')
 export class ServicioOrmEntity {
@@ -6,14 +7,20 @@ export class ServicioOrmEntity {
     id: number;
 
     @Column()
-    nombreservicio: string;
+    nombreServicio: string;
 
     @Column()
-    descripcionservicio: string;
+    descripcionServicio: string;
 
     @Column()
-    precioservicio: string;
+    precioServicio: string;
 
     @Column()
-    duracion: string;
+    duracionServicio: string;
+
+    @Column({default: true})
+    estadoServicio: boolean
+
+    @ManyToMany(() => CitaOrmEntity, cita => cita.servicios)
+    citas: CitaOrmEntity[];
 }

@@ -16,7 +16,7 @@ import { ROL_REPOSITORY } from "./rol.repository.token";
                 useClass: require('./infrastructure/repositories/rol.repository.impl').RolRepositoryImpl
             }
         ],
-        exports: [RolModule]
+        exports: [RolModule, ROL_REPOSITORY]
 })
 export class RolModule{
 

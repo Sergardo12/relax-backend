@@ -1,9 +1,10 @@
 export class Servicio {
     constructor (
         public readonly id: number | null,
-        public nombreservicio : string,
-        public descripcionservicio : string,
-        public precioservicio : string,
-        public duracion : string,
+        public nombreServicio : string,
+        public descripcionServicio : string,
+        public precioServicio : string,
+        public duracionServicio : string,
+        public estadoServicio: boolean
     ) {}
 }

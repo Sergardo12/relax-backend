@@ -1,0 +1,1 @@
+export const PAGO_CITA_REPOSITORY = Symbol('PagoCitaRepository')

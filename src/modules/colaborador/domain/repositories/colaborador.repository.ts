@@ -1,6 +1,16 @@
 import { Colaborador } from "../entities/colaborador.entity";
 
 export interface ColaboradorRepository {
-    obtenerPorId(id: number): Promise<Colaborador | null>;
-    // Puedes agregar más si necesitas buscar por DNI o email, etc.
+
+  crear(colaborador: Colaborador): Promise<Colaborador>;
+
+  buscarPorId(id: number): Promise<Colaborador | null>;
+
+  listarTodos(): Promise<Colaborador[]>;
+
+  actualizar(colaborador: Colaborador): Promise<Colaborador>;
+
+  eliminar(id: number): Promise<void>;
+
+ 
 }

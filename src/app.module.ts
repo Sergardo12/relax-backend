@@ -5,6 +5,10 @@ import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { RolModule } from './modules/rol/rol.module';
+import { PacienteModule } from './modules/paciente/paciente.module';
+import { ColaboradorModule } from './modules/colaborador/colaborador.module';
+import { CitaModule } from './modules/cita/cita.module';
+import { PagoCitaModule } from './modules/pago-cita/pago-cita.module';
 
 
 
@@ -28,7 +32,11 @@ import { RolModule } from './modules/rol/rol.module';
       synchronize: true,
     }),
     UsuarioModule,
-    RolModule
+    RolModule,
+    PacienteModule,
+    ColaboradorModule,
+    CitaModule,
+    PagoCitaModule
   ],
   controllers: [AppController],
   providers: [AppService],

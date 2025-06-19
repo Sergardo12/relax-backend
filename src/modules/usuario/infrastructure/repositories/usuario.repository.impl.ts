@@ -18,6 +18,17 @@ export class UsuarioRepositoryImpl implements UsuarioRepository{
     async crear(usuario: Usuario): Promise<Usuario> {
         const ormEntity = UsuarioMapper.toOrmEntity(usuario);
         const savedOrmEntity = await this.ormRepo.save(ormEntity);
-        return UsuarioMapper.toDamain(savedOrmEntity);
+        return UsuarioMapper.toDomain(savedOrmEntity);
     }
+
+    async buscarPorId(id: number): Promise<Usuario | null> {
+    const ormUsuario = await this.ormRepo.findOne({
+      where: { id },
+      relations: ['rol'], // Asegúrate de incluir las relaciones necesarias
+    });
+
+    if (!ormUsuario) return null;
+
+    return UsuarioMapper.toDomain(ormUsuario);
+  }
 }

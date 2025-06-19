@@ -1,0 +1,1 @@
+export const HISTORIAL_MEDICO_REPOSITORY = Symbol('HistorialMedicoRepository')

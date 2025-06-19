@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString } from "class-validator";
+import { IsInt, IsNotEmpty, IsString } from "class-validator";
 
 export class CrearUsuarioDto {
     @IsString() // varchar
@@ -8,6 +8,10 @@ export class CrearUsuarioDto {
     @IsString()
     @IsNotEmpty()
     clave: string;
+
+    @IsInt() // 👈 Validamos que sea un número entero
+    @IsNotEmpty()
+    rolId: number; // 👈 Nuevo campo para relacionar con la tabla rol
 }
     
 

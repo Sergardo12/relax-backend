@@ -9,8 +9,9 @@ export class RolOrmEntity {
     @Column()
     nombreRol: string
 
-    
-    @OneToMany(() => UsuarioOrmEntity, usuario => usuario.rol)
-    usuarios: UsuarioOrmEntity[]
+     // 👇 Relación uno-a-muchos: un rol puede tener muchos usuarios
+    @OneToMany(() => UsuarioOrmEntity, usuario => usuario.rol)  // Esto significa que un rol puede tener muchos usuarios asociados.
+                                                                // El segundo argumento `usuario => usuario.rol` enlaza con el campo inverso en Usuario.
+    usuarios?: UsuarioOrmEntity[]
 
 }
