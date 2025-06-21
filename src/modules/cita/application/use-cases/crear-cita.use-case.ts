@@ -30,49 +30,29 @@ export class CrearCitaUseCase {
   ) {}
 
   async ejecutar(dto: CrearCitaDto): Promise<Cita> {
-    const paciente = await this.pacienteRepo.buscarPorId(dto.paciente);
-    if (!paciente) throw new NotFoundException('Paciente no encontrado');
+  const paciente = await this.pacienteRepo.buscarPorId(dto.paciente);
+  const colaborador = await this.colaboradorRepo.buscarPorId(dto.colaborador);
+  const servicios = await Promise.all(dto.servicios.map(id => this.servicioRepo.buscarPorId(id)));
 
-    const colaborador = await this.colaboradorRepo.buscarPorId(dto.colaborador);
-    if (!colaborador) throw new NotFoundException('Colaborador no encontrado');
+  const pago = dto.pago ? new PagoCita(0, dto.pago.monto, dto.pago.fechaPago, dto.pago.metodoPago) : undefined;
 
-    const servicios: Servicio[] = [];
-    for (const id of dto.servicios) {
-      const servicio = await this.servicioRepo.buscarPorId(id);
-      if (!servicio)
-        throw new NotFoundException(`Servicio con ID ${id} no encontrado`);
-      servicios.push(servicio);
-    }
-    let pago: PagoCita | undefined = undefined;
-    if (dto.pago) {
-      pago = new PagoCita(
-        0,
-        dto.pago.monto,
-        // undefined as unknown as Cita,
-        dto.pago.fechaPago,
-        dto.pago.metodoPago,
-      );
-    }
+  const cita = new Cita(
+    null,
+    dto.fechaCita,
+    dto.horaCita,
+    dto.estadoCita,
+    dto.motivoCita,
+    dto.diagnostico || '',
+    paciente,
+    colaborador,
+    servicios,
+    null,
+    pago
+  );
 
-    const cita = new Cita(
-      null,
-      dto.fechaCita,
-      dto.horaCita,
-      dto.estadoCita,
-      dto.motivoCita,
-      dto.diagnostico || '',
-      paciente,
-      colaborador,
-      servicios,
-      null, // historial médico, si aplica luego,
-      pago,
-    );
+  if (pago) pago.cita = cita; // relación explícita
 
-    // Enlazas la cita en el objeto pago
-    // if (pago) {
-    //   pago.cita = cita;
-    // }
+  return this.citaRepo.crear(cita);
+}
 
-    return this.citaRepo.crear(cita);
-  }
 }

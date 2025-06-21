@@ -7,16 +7,17 @@ import { PagoCita } from "../../../pago-cita/domain/entities/pago-cita.entity";
 export class Cita {
   constructor(
     public readonly id: number | null,
-    public fechaCita?: Date,
-    public horaCita?: string,
-    public estadoCita?: string, // ← ESTE ES EL CUARTO
-    public motivoCita?: string, // ← QUINTO
-    public diagnostico?: string, // ← SEXTO
-    
-    public paciente?: Paciente,
-    public colaborador?: Colaborador,
-    public servicios?: Servicio[],
+    public fechaCita: Date,
+    public horaCita: string,
+    public estadoCita: string,
+    public motivoCita: string,
+    public diagnostico: string,
+    public paciente: Paciente,
+    public colaborador: Colaborador,
+    public servicios: Servicio[],
     public historialMedico?: HistorialMedico | null,
     public pago?: PagoCita | null,
-  ) {}
+  ) {
+    if (pago) pago.cita = this;
+  }
 }

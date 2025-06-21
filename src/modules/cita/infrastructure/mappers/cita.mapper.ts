@@ -25,26 +25,21 @@ export class CitaMapper {
 
 static toOrmEntity(domain: Cita): CitaOrmEntity {
   const orm = new CitaOrmEntity();
-
   orm.id = domain.id ?? 0;
-  orm.fechaCita = domain.fechaCita!;
-  orm.horaCita = domain.horaCita!;
-  orm.estadoCita = domain.estadoCita!;
-  orm.motivoCita = domain.motivoCita!;
-  orm.diagnostico = domain.diagnostico!;
-
-  orm.paciente = PacienteMapper.toOrmEntity(domain.paciente!);
-  orm.colaborador = ColaboradorMapper.toOrmEntity(domain.colaborador!);
-  orm.servicios = domain.servicios?.map(serv => ServicioMapper.toOrmEntity(serv)) ?? [];
-
-  if (domain.historialMedico) {
-    orm.historialMedico = HistorialMedicoMapper.toOrmEntity(domain.historialMedico);
-  }
-
+  orm.fechaCita = domain.fechaCita;
+  orm.horaCita = domain.horaCita;
+  orm.estadoCita = domain.estadoCita;
+  orm.motivoCita = domain.motivoCita;
+  orm.diagnostico = domain.diagnostico;
+  orm.paciente = PacienteMapper.toOrmEntity(domain.paciente);
+  orm.colaborador = ColaboradorMapper.toOrmEntity(domain.colaborador);
+  orm.servicios = domain.servicios.map(ServicioMapper.toOrmEntity);
+  if (domain.historialMedico) orm.historialMedico = HistorialMedicoMapper.toOrmEntity(domain.historialMedico);
   if (domain.pago) {
-    orm.pago = PagoCitaMapper.toOrmEntity(domain.pago); // ✅ Aquí el cambio clave
+    const pagoOrm = PagoCitaMapper.toOrmEntity(domain.pago);
+    orm.pago = pagoOrm;
   }
-
   return orm;
 }
+
 }
