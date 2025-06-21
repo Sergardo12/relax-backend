@@ -14,29 +14,28 @@ import { PagoCitaModule } from './modules/pago-cita/pago-cita.module';
 
 @Module({
   imports: [
-    //ConfigModule lee el archivo .env
-
+    // Cargar variables de entorno
     ConfigModule.forRoot({
-      isGlobal: true
+      isGlobal: true,
     }),
 
-    //TypeOrmModule se configura con las variables de entorno
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: process.env.DATABASE_HOST,
-      port: parseInt(process.env.DATABASE_PORT ?? '5432', 10),
-      username: process.env.DATABASE_USER,
-      password: process.env.DATABASE_PASSWORD,
-      database: process.env.DATABASE_NAME,
-      autoLoadEntities: true,
-      synchronize: true,
+    // Usamos DATABASE_URL para que Render lo entienda directamente
+    TypeOrmModule.forRootAsync({
+      useFactory: () => ({
+        type: 'postgres',
+        url: process.env.DATABASE_URL,
+        autoLoadEntities: true,
+        synchronize: true, // ⚠️ SOLO en desarrollo, NO en producción real
+      }),
     }),
+
+    // Resto de los módulos de tu app
     UsuarioModule,
     RolModule,
     PacienteModule,
     ColaboradorModule,
     CitaModule,
-    PagoCitaModule
+    PagoCitaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
