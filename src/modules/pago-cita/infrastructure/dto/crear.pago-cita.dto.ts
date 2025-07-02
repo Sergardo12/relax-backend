@@ -1,21 +1,16 @@
-import { IsDateString, IsInt, IsNotEmpty, IsString,  } from "class-validator";
+import { IsDateString, IsInt, IsNotEmpty, IsOptional, IsString,  } from "class-validator";
 
 export class CrearPagoCitaDto{
-    @IsInt()
-    @IsNotEmpty()
-    monto: number
-    
-    @IsInt()
-    @IsNotEmpty()
-    cita: number;
-
+ 
     @IsDateString()
-    @IsNotEmpty()
+    @IsOptional()
+    
     fechaPago: Date;
-
     @IsString()
-    @IsNotEmpty()
+    @IsOptional()
     metodoPago: string
+
+  
     
 
 

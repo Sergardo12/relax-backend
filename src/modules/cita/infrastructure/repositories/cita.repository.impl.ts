@@ -9,16 +9,30 @@ import { CitaMapper } from "../mappers/cita.mapper";
 
 @Injectable()
 export class CitaRepositoryImpl implements CitaRepository {
-    constructor(
-        @InjectRepository(CitaOrmEntity)
-        private readonly ormRepo: Repository<CitaOrmEntity>,
-    ) {}
+  constructor(
+    @InjectRepository(CitaOrmEntity)
+    private readonly ormRepo: Repository<CitaOrmEntity>,
+  ) {}
 
-    async crear(cita: Cita): Promise<Cita> {
-        const ormEntity = CitaMapper.toOrmEntity(cita);
-        const savedOrmEntity = await this.ormRepo.save(ormEntity);
-        return CitaMapper.toDomain(savedOrmEntity);
-    }
+  async crear(cita: Cita): Promise<Cita> {
+    const ormEntity = CitaMapper.toOrmEntity(cita);
+    const savedOrmEntity = await this.ormRepo.save(ormEntity);
+    return CitaMapper.toDomain(savedOrmEntity);
+  }
+  async buscarPorId(id: number): Promise<Cita | null> {
+    const ormCita = await this.ormRepo.findOne({
+      where: { id },
+      relations: [
+        'paciente',
+        'colaborador',
+        'servicios',
+        'pago',
+        'historialMedico',
+      ],
+    });
 
-    // Aquí podrías añadir métodos como buscarPorId, listarTodos, etc., si los necesitas luego
+    if (!ormCita) return null;
+
+    return CitaMapper.toDomain(ormCita);
+  }
 }

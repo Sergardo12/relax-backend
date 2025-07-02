@@ -31,10 +31,38 @@ export class CrearCitaUseCase {
 
   async ejecutar(dto: CrearCitaDto): Promise<Cita> {
   const paciente = await this.pacienteRepo.buscarPorId(dto.paciente);
+  if (!paciente) {
+    throw new NotFoundException(`Paciente con ID ${dto.paciente} no encontrado`);
+  }
   const colaborador = await this.colaboradorRepo.buscarPorId(dto.colaborador);
-  const servicios = await Promise.all(dto.servicios.map(id => this.servicioRepo.buscarPorId(id)));
+  if (!colaborador) {
+    throw new NotFoundException(`Colaborador con ID ${dto.colaborador} no encontrado`);
+  }
+  const servicios: Servicio[] = [];
 
-  const pago = dto.pago ? new PagoCita(0, dto.pago.monto, dto.pago.fechaPago, dto.pago.metodoPago) : undefined;
+  for (const id of dto.servicios) {
+    const servicio = await this.servicioRepo.buscarPorId(id);
+    if (!servicio) {
+      throw new NotFoundException(`Servicio con ID ${id} no encontrado`);
+    }
+    servicios.push(servicio);
+  }
+  
+
+
+  let pago: PagoCita | undefined;
+
+if (dto.pago) {
+  const montoTotal = servicios.reduce((total, s) => total + parseFloat(s.precioServicio), 0);
+
+  pago = new PagoCita(
+    0,
+    montoTotal,
+    new Date(),
+    dto.pago.metodoPago ?? 'efectivo'
+  );
+}
+
 
   const cita = new Cita(
     null,
