@@ -1,0 +1,1 @@
+export const ESPECIALIDAD_REPOSITORY = Symbol('EspecialidadRepository')
