@@ -1,6 +1,6 @@
 import { Usuario } from "../../domain/entities/usuario.entity";
 import { UsuarioOrmEntity } from "../database/usuario-entity.orm";
-import { RolMapper } from '../../../Rol/infrastructure/mapper/rol.mapper';
+import { RolMapper } from '../../../rol/infrastructure/mapper/rol.mapper';
 
 export class UsuarioMapper {
     
@@ -8,9 +8,11 @@ export class UsuarioMapper {
         return new Usuario({
             id: usuario.id,
             correo: usuario.correo,
-            contraseña: usuario.contraseña,
+            contraseña: usuario.contraseña, // aqui ya viene hasheada
             rol: RolMapper.toDomain(usuario.rol),
-            estado: usuario.estado 
+            estado: usuario.estado,
+            perfilCompleto: usuario.perfilCompleto, 
+
         });
     }
 
@@ -22,6 +24,7 @@ export class UsuarioMapper {
         usuarioOrm.contraseña = contraseñaHasheada;
         usuarioOrm.rolId = usuario.getRol().getId(),
         usuarioOrm.estado = usuario.getEstado();
+        usuarioOrm.perfilCompleto = usuario.getPerfilCompleto();
         return usuarioOrm;
     }
 
@@ -32,6 +35,7 @@ export class UsuarioMapper {
         usuarioOrm.correo = usuario.correo;
         usuarioOrm.rolId = usuario.getRol().getId(),
         usuarioOrm.estado = usuario.getEstado();
+        usuarioOrm.perfilCompleto = usuario.getPerfilCompleto();
         return usuarioOrm;
     }
 }

@@ -1,11 +1,11 @@
 import { ConflictException, Inject, Injectable } from "@nestjs/common";
-import { ROL_REPOSITORY } from "src/modules/Rol/infrastructure/rol.repository.token";
 import { UsuarioRepository } from "../../domain/repositories/usuario.repository";
 import { ContraseñaService } from "../services/contraseña.service";
 import { CrearUsuarioDTO } from "../../infrastructure/dto/crearUsuario.dto";
-import { RolRepository } from "src/modules/Rol/domain/repositories/rol.repository";
 import { USUARIO_REPOSITORY } from "../../infrastructure/usuario.repository.token";
 import { Usuario } from "../../domain/entities/usuario.entity";
+import { ROL_REPOSITORY } from "src/modules/rol/infrastructure/rol.repository.token";
+import { RolRepository } from "src/modules/rol/domain/repositories/rol.repository";
 
 
 @Injectable()
