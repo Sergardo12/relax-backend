@@ -45,11 +45,14 @@ export class Rol {
   setEstado(estado: EstadoRol): void {
     this.estado = estado;
   }
+
+  // Método toJSON para serialización
+  toJSON() {
+    return {
+      id: this.id,
+      nombre: this.nombre,
+      descripcion: this.descripcion,
+      estado: this.estado,
+    };
+  }
 }
-
-// const rol1 = new Rol({nombre: 'Admin', descripcion: 'Administrador del sistema'});
-
-//rol1.setNombre('Super Admin');
-
-
-

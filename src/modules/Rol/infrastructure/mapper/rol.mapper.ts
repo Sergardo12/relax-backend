@@ -25,3 +25,4 @@ export class RolMapper{
     // de domain a orm, osea de entidad a base de datos
  
 }
+

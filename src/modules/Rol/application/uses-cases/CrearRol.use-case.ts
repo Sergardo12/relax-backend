@@ -3,7 +3,7 @@ import { RolRepository } from "../../domain/repositories/rol.repository";
 import { RolDto } from "../../infrastructure/dto/rol.dto";
 import { Rol } from "../../domain/entities/rol.entity";
 import { ROL_REPOSITORY } from "../../infrastructure/rol.repository.token";
-import { EstadoRol } from "../../domain/enums/rol.enum";
+
 
 @Injectable()
 export class CrearRolUseCase {

@@ -1,10 +1,10 @@
 import { Module } from "@nestjs/common";
 import { TypeOrmModule } from "@nestjs/typeorm";
-import { RolOrmEntity } from "./infrastructure/database/rol.orm-entity";
-import { RolController } from "./presentation/rol.controller";
-import { CrearRolUseCase } from "./application/uses-cases/CrearRol.use-case";
-import { ROL_REPOSITORY } from "./infrastructure/rol.repository.token";
-import { RolRepositoryImpl } from "./infrastructure/repositories/rol.repository.impl";
+import { RolOrmEntity } from "../../modules/rol/infrastructure/database/rol.orm-entity";
+import { RolController } from "../../modules/rol/presentation/rol.controller";
+import { CrearRolUseCase } from "../../modules/rol/application/uses-cases/CrearRol.use-case";
+import { RolRepositoryImpl } from "../../modules/rol/infrastructure/repositories/rol.repository.impl";
+import { ROL_REPOSITORY } from "../rol/infrastructure/rol.repository.token";
 
 @Module({
     imports: [TypeOrmModule.forFeature([RolOrmEntity])],
