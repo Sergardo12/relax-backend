@@ -1,0 +1,1 @@
+export const PAGO_SUSCRIPCION_REPOSITORY_TOKEN = Symbol('PagoSuscripcionRepository');
