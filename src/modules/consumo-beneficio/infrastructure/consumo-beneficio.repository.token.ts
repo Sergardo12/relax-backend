@@ -1,0 +1,1 @@
+export const CONSUMO_BENEFICIO_REPOSITORY_TOKEN = Symbol('ConsumoBeneficioRepository');
