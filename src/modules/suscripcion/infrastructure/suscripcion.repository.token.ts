@@ -1,0 +1,1 @@
+export const SUSCRIPCION_REPOSITORY_TOKEN = Symbol('SuscripcionRepository');
