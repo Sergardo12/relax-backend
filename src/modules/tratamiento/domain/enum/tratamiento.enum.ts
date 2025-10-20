@@ -1,0 +1,7 @@
+export enum EstadoTratamiento{
+    ACTIVO = 'ACTIVO',
+    FINALIZADO = 'FINALIZADO',
+    CANCELADO = 'CANCELADO',
+    INACTIVO = 'INACTIVO',
+    COMPLETADO = 'COMPLETADO'
+}
