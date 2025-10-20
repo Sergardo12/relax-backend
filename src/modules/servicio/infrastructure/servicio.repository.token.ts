@@ -1,0 +1,1 @@
+export const SERVICIO_REPOSITORY = Symbol('ServicioRepository')
