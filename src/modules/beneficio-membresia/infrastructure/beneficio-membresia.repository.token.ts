@@ -1,0 +1,1 @@
+export const BENEFICIO_MEMBRESIA_REPOSITORY_TOKEN = Symbol('BeneficioMembresiaRepository');
