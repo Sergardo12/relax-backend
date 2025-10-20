@@ -1,0 +1,1 @@
+export const MEMBRESIA_REPOSITORY_TOKEN = Symbol('MembresiaRepository');
