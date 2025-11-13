@@ -46,11 +46,22 @@ export class DetalleCitaMapper {
     detalleCitaOrm.colaborador = colaboradorOrm;
 
     const consumo = detalleCita.getConsumoBeneficio();
+    console.log('🗺️ Consumo beneficio:', consumo ? 'existe' : 'undefined');
+
     if (consumo) {
+      console.log('🗺️ ID del consumo:', consumo.getId());
       const consumoOrm = new ConsumoBeneficioOrmEntity();
       consumoOrm.id = consumo.getId();
       detalleCitaOrm.consumoBeneficio = consumoOrm;
+      console.log('🗺️ consumoOrm asignado');
     }
+
+    // const consumo = detalleCita.getConsumoBeneficio();
+    // if (consumo) {
+    //   const consumoOrm = new ConsumoBeneficioOrmEntity();
+    //   consumoOrm.id = consumo.getId();
+    //   detalleCitaOrm.consumoBeneficio = consumoOrm;
+    // }
 
     detalleCitaOrm.precioUnitario = detalleCita.getPrecioUnitario();
     detalleCitaOrm.cantidad = detalleCita.getCantidad();

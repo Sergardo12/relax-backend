@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Body, Param, BadRequestException } from '@nestjs/common';
+import { Controller, Post, Get, Body, Param, BadRequestException, HttpStatus, HttpException } from '@nestjs/common';
 import { PagarConTarjetaDto } from '../infrastructure/dto/pagar-con-tarjeta.dto';
 import { PagarConYapeDto } from '../infrastructure/dto/pagar-con-yape.dto';
 import { PagarConEfectivoDto } from '../infrastructure/dto/pagar-con-efectivo.dto';
@@ -7,6 +7,8 @@ import { PagarConYapeUseCase } from '../application/use-cases/pagar-con-yape.use
 import { PagarConEfectivoUseCase } from '../application/use-cases/pagar-con-efectivo.use-case';
 import { ObtenerPagosPorCitaUseCase } from '../application/use-cases/obtener-pagos-por-cita.use-case';
 import { ObtenerPagoPorIdUseCase } from '../application/use-cases/obtener-pago-por-id.use-case';
+import { PagarConMembresiaUseCase } from '../application/use-cases/pagar-con-membresia';
+import { PagarConMembresiaDto } from '../infrastructure/dto/pagar-con-membresia';
 
 @Controller('pagos-cita')
 export class PagoCitaController {
@@ -16,6 +18,7 @@ export class PagoCitaController {
     private readonly pagarConEfectivoUseCase: PagarConEfectivoUseCase,
     private readonly obtenerPagosPorCitaUseCase: ObtenerPagosPorCitaUseCase,
     private readonly obtenerPagoPorIdUseCase: ObtenerPagoPorIdUseCase,
+    private readonly pagarConMembresiaUseCase: PagarConMembresiaUseCase
   ) {}
 
   @Post('tarjeta')
@@ -49,6 +52,24 @@ export class PagoCitaController {
     }
 
     return result.value;
+  }
+  @Post('membresia')
+  async pagarConMembresia(@Body() dto: PagarConMembresiaDto) {
+    try {
+      const result = await this.pagarConMembresiaUseCase.execute(dto);
+
+      if (!result.ok) {
+        throw new HttpException(result.message, HttpStatus.BAD_REQUEST);
+      }
+
+      return result.value;
+    } catch (error) {
+      console.error('💥 ERROR:', error);
+      throw new HttpException(
+        error.message || 'Error al procesar pago con membresía',
+        HttpStatus.INTERNAL_SERVER_ERROR,
+      );
+    }
   }
 
   @Get('cita/:idCita')

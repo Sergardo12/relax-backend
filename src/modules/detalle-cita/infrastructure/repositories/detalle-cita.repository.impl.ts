@@ -16,8 +16,13 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
 
   async create(detalleCita: DetalleCita): Promise<Result<DetalleCita>> {
     try {
+        console.log('🏪 REPOSITORIO: Iniciando creación');
+        console.log('🏪 Entity recibida: ', detalleCita)
+        console.log('🏪 Convirtiendo a ORM...');
       const ormEntity = DetalleCitaMapper.toOrmEntity(detalleCita);
+      console.log('🏪 Guardando en base de datos...');
       const savedEntity = await this.detalleCitaRepository.save(ormEntity);
+        console.log('✅ REPOSITORIO: Guardado exitoso:', savedEntity.id);
       // Recargar con TODAS las relaciones
       const reloaded = await this.detalleCitaRepository.findOne({
         where: { id: savedEntity.id },
@@ -25,17 +30,21 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
         'cita',
         'cita.paciente',
         'cita.paciente.usuario',
-        'cita.paciente.usuario.rol',
+        'cita.paciente.usuario.rol', // ⭐ IMPORTANTE
         'servicio',
         'servicio.especialidad',
         'colaborador',
-        'colaborador.especialidad',
         'colaborador.usuario',
-        'colaborador.usuario.rol',
-        'consumoBeneficio', 
-        'consumoBeneficio.suscripcion', 
-        'consumoBeneficio.suscripcion.membresia', 
-        'consumoBeneficio.servicio', 
+        'colaborador.usuario.rol', // ⭐ IMPORTANTE
+        'colaborador.especialidad',
+        'consumoBeneficio',
+        'consumoBeneficio.suscripcion',
+        'consumoBeneficio.suscripcion.paciente',
+        'consumoBeneficio.suscripcion.paciente.usuario',
+        'consumoBeneficio.suscripcion.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'consumoBeneficio.suscripcion.membresia',
+        'consumoBeneficio.servicio',
+        'consumoBeneficio.servicio.especialidad',
       ],
     });
 
@@ -44,7 +53,11 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
     }
       return Result.success(DetalleCitaMapper.toDomain(reloaded));
     } catch (error) {
+      console.error('💥 REPOSITORIO ERROR:', error);
+      console.error('💥 Error message:', error.message);
+      console.error('💥 Error stack:', error.stack);
       return Result.failure('Error al crear el detalle de cita', error);
+      
     }
   }
 
@@ -52,20 +65,24 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
     try {
       const detalles = await this.detalleCitaRepository.find({
         relations: [
-        'cita',
+       'cita',
         'cita.paciente',
         'cita.paciente.usuario',
-        'cita.paciente.usuario.rol',
+        'cita.paciente.usuario.rol', // ⭐ IMPORTANTE
         'servicio',
         'servicio.especialidad',
         'colaborador',
-        'colaborador.especialidad',
         'colaborador.usuario',
-        'colaborador.usuario.rol',
+        'colaborador.usuario.rol', // ⭐ IMPORTANTE
+        'colaborador.especialidad',
         'consumoBeneficio',
-        'consumoBeneficio.suscripcion', 
-        'consumoBeneficio.suscripcion.membresia', 
-        'consumoBeneficio.servicio', 
+        'consumoBeneficio.suscripcion',
+        'consumoBeneficio.suscripcion.paciente',
+        'consumoBeneficio.suscripcion.paciente.usuario',
+        'consumoBeneficio.suscripcion.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'consumoBeneficio.suscripcion.membresia',
+        'consumoBeneficio.servicio',
+        'consumoBeneficio.servicio.especialidad',
         ]
       });
       const detallesDomain = detalles.map(DetalleCitaMapper.toDomain);
@@ -80,20 +97,24 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
       const detalle = await this.detalleCitaRepository.findOne({
         where: { id},
         relations: [
-        'cita',
+       'cita',
         'cita.paciente',
         'cita.paciente.usuario',
-        'cita.paciente.usuario.rol',
+        'cita.paciente.usuario.rol', // ⭐ IMPORTANTE
         'servicio',
         'servicio.especialidad',
         'colaborador',
-        'colaborador.especialidad',
         'colaborador.usuario',
-        'colaborador.usuario.rol',
-        'consumoBeneficio', 
-        'consumoBeneficio.suscripcion', 
-        'consumoBeneficio.suscripcion.membresia', 
-        'consumoBeneficio.servicio', 
+        'colaborador.usuario.rol', // ⭐ IMPORTANTE
+        'colaborador.especialidad',
+        'consumoBeneficio',
+        'consumoBeneficio.suscripcion',
+        'consumoBeneficio.suscripcion.paciente',
+        'consumoBeneficio.suscripcion.paciente.usuario',
+        'consumoBeneficio.suscripcion.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'consumoBeneficio.suscripcion.membresia',
+        'consumoBeneficio.servicio',
+        'consumoBeneficio.servicio.especialidad',
         ]
       });
       if (!detalle) {
@@ -113,20 +134,24 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
       const ormEntities = await this.detalleCitaRepository.find({
         where: { cita: { id: idCita },},
         relations: [
-          'cita',
-          'cita.paciente',
-          'cita.paciente.usuario',
-          'cita.paciente.usuario.rol',
-          'servicio',
-          'servicio.especialidad',
-          'colaborador',
-          'colaborador.especialidad',
-          'colaborador.usuario',
-          'colaborador.usuario.rol',
-          'consumoBeneficio', 
-          'consumoBeneficio.suscripcion', 
-          'consumoBeneficio.suscripcion.membresia', 
-          'consumoBeneficio.servicio', 
+         'cita',
+        'cita.paciente',
+        'cita.paciente.usuario',
+        'cita.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'servicio',
+        'servicio.especialidad',
+        'colaborador',
+        'colaborador.usuario',
+        'colaborador.usuario.rol', // ⭐ IMPORTANTE
+        'colaborador.especialidad',
+        'consumoBeneficio',
+        'consumoBeneficio.suscripcion',
+        'consumoBeneficio.suscripcion.paciente',
+        'consumoBeneficio.suscripcion.paciente.usuario',
+        'consumoBeneficio.suscripcion.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'consumoBeneficio.suscripcion.membresia',
+        'consumoBeneficio.servicio',
+        'consumoBeneficio.servicio.especialidad',
         ]
       });
 
@@ -163,19 +188,23 @@ export class DetalleCitaRepositoryImpl implements DetalleCitaRepository {
         where: { id },
         relations: [
           'cita',
-          'cita.paciente',
-          'cita.paciente.usuario',
-          'cita.paciente.usuario.rol',
-          'servicio',
-          'servicio.especialidad',
-          'colaborador',
-          'colaborador.especialidad',
-          'colaborador.usuario',
-          'colaborador.usuario.rol',
-          'consumoBeneficio', // ⭐ NUEVO
-          'consumoBeneficio.suscripcion', // ⭐ NUEVO
-          'consumoBeneficio.suscripcion.membresia', // ⭐ NUEVO
-          'consumoBeneficio.servicio', // ⭐ NUEVO
+        'cita.paciente',
+        'cita.paciente.usuario',
+        'cita.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'servicio',
+        'servicio.especialidad',
+        'colaborador',
+        'colaborador.usuario',
+        'colaborador.usuario.rol', // ⭐ IMPORTANTE
+        'colaborador.especialidad',
+        'consumoBeneficio',
+        'consumoBeneficio.suscripcion',
+        'consumoBeneficio.suscripcion.paciente',
+        'consumoBeneficio.suscripcion.paciente.usuario',
+        'consumoBeneficio.suscripcion.paciente.usuario.rol', // ⭐ IMPORTANTE
+        'consumoBeneficio.suscripcion.membresia',
+        'consumoBeneficio.servicio',
+        'consumoBeneficio.servicio.especialidad',
         ],
       });
 

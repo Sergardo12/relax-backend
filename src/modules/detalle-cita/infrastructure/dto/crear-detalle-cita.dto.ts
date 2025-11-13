@@ -33,8 +33,5 @@ export class CrearDetalleCitaDto {
   @IsOptional()
   pagarConMembresia?: boolean;
 
-  @ValidateIf(o => o.pagarConMembresia === true)
-  @IsUUID()
-  @IsOptional()
-  idConsumoBeneficio?: string;
+
 }

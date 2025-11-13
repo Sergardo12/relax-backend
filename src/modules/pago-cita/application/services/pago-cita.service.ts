@@ -34,8 +34,15 @@ export class PagoCitaService {
     }
 
     const detalles = result.value;
-    const total = detalles.reduce((sum, detalle) => sum + detalle.getSubtotal(), 0);
-    return total;
+
+    const total = detalles.reduce((sum, detalle) =>{
+      const subTotal = Number(detalle.getSubtotal())
+      return sum + subTotal;
+    }, 0);
+
+     console.log('💰 Total calculado:', total, typeof total); // Debe ser "number"
+
+    return total
   }
 
   async crearCargoTarjeta(

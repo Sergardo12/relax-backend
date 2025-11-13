@@ -21,7 +21,10 @@ export class CrearCitaUseCase {
 
   async ejecutar(dto: CrearCitaDto): Promise<Result<Cita>> {
     const { idPaciente, fecha: fechaString, hora } = dto;
-    const fecha = new Date(fechaString);
+    
+    // 🔥 SOLUCIÓN: Agregar T12:00:00 para evitar problemas de zona horaria
+    const fecha = new Date(fechaString + 'T12:00:00');
+    
     // Validar que el paciente exista
     const pacienteResult = await this.pacienteRepository.findById(idPaciente);
     if (!pacienteResult.ok) {
@@ -39,7 +42,7 @@ export class CrearCitaUseCase {
     // Validar horario laboral
     if (!this.citaService.validarHorarioLaboral(hora)) {
       return Result.failure(
-        'La hora debe estar dentro del horario laboral (8:00 AM - 8:00 PM)',
+        'La hora debe estar dentro del horario laboral (8:00 AM - 10:00 PM)',
       );
     }
 

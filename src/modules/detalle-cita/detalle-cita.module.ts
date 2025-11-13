@@ -13,6 +13,7 @@ import { EliminarDetalleCitaUseCase } from './application/use-cases/eliminar-det
 import { CitaModule } from '../cita/cita.module';
 import { ServicioModule } from '../servicio/servicio.module';
 import { ColaboradorModule } from '../colaborador/colaborador.module';
+import { ConsumoBeneficioModule } from '../consumo-beneficio/consumo-beneficio.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { ColaboradorModule } from '../colaborador/colaborador.module';
     CitaModule,
     ServicioModule,
     ColaboradorModule,
+    ConsumoBeneficioModule
   ],
   controllers: [DetalleCitaController],
   providers: [

@@ -64,7 +64,7 @@ export class CitaRepositoryImpl implements CitaRepository {
     const citasOrm = await this.citaRepository.find({
       where: { paciente: { id: pacienteId } },
       relations: ['paciente', 'paciente.usuario'],
-      order: { fecha: 'DESC', hora: 'DESC' },
+      order: { fecha: 'ASC', hora: 'ASC' },
     });
 
     const citas = citasOrm.map(CitaMapper.toDomain);

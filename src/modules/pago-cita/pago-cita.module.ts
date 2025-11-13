@@ -15,6 +15,8 @@ import { ObtenerPagosPorCitaUseCase } from './application/use-cases/obtener-pago
 import { ObtenerPagoPorIdUseCase } from './application/use-cases/obtener-pago-por-id.use-case';
 import { CitaModule } from '../cita/cita.module';
 import { DetalleCitaModule } from '../detalle-cita/detalle-cita.module';
+import { PagarConMembresiaUseCase } from './application/use-cases/pagar-con-membresia';
+import { ConsumoBeneficioModule } from '../consumo-beneficio/consumo-beneficio.module';
 
 @Module({
   imports: [
@@ -22,6 +24,7 @@ import { DetalleCitaModule } from '../detalle-cita/detalle-cita.module';
     ConfigModule,
     CitaModule,
     DetalleCitaModule,
+    ConsumoBeneficioModule
   ],
   controllers: [PagoCitaController, WebhookController],
   providers: [
@@ -32,6 +35,7 @@ import { DetalleCitaModule } from '../detalle-cita/detalle-cita.module';
     ProcesarWebhookCulqiUseCase,
     ObtenerPagosPorCitaUseCase,
     ObtenerPagoPorIdUseCase,
+    PagarConMembresiaUseCase,
     {
       provide: PAGO_CITA_REPOSITORY_TOKEN,
       useClass: PagoCitaRepositoryImpl,

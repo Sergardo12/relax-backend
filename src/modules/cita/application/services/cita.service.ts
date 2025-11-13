@@ -18,7 +18,7 @@ export class CitaService {
     const [hours, minutes] = hora.split(':').map(Number);
     const horaEnMinutos = hours * 60 + minutes;
     const inicioLaboral = 8 * 60; // 8:00 AM
-    const finLaboral = 20 * 60; // 8:00 PM
+    const finLaboral = 23 * 60; // 8:00 PM
 
     return horaEnMinutos >= inicioLaboral && horaEnMinutos <= finLaboral;
   }
