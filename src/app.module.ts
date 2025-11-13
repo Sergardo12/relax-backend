@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PacienteModule } from './modules/paciente/paciente.module';
 import { AuthModule } from './modules/auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { EspecialidadModule } from './modules/especialidad/especialidad.module';
 import { ColaboradorModule } from './modules/colaborador/colaborador.module';
 import { ServicioModule } from './modules/servicio/servicio.module';
@@ -36,15 +36,20 @@ import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.mod
   imports: [
     ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true }),
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'postgres',
-      database: 'relaxdb',
-      autoLoadEntities: true,
-      synchronize: true, // Solo para desarrollo, en producción usar migraciones
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DATABASE_HOST') || 'localhost',
+        port: parseInt(configService.get('DATABASE_PORT') || '5432'),
+        username: configService.get('DATABASE_USER') || 'postgres',
+        password: configService.get('DATABASE_PASSWORD') || 'postgres',
+        database: configService.get('DATABASE_NAME') || 'relaxdb',
+        autoLoadEntities: true,
+        synchronize: configService.get('NODE_ENV') !== 'production', 
+        ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
+      }),
+      inject:[ConfigService],
     }),
     AuthModule,
     RolModule,
