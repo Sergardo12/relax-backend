@@ -40,10 +40,10 @@ export class CrearColaboradorUseCase {
       return Result.failure('El usuario especificado no existe');
     }
 
-    // 2. Validar que el usuario tiene rol "colaborador"
-    if (usuario.getRol().nombre !== 'colaborador') {
+    const rolesPermitidos = ['colaborador', 'administrador', 'recepcionista'];
+    if (!rolesPermitidos.includes(usuario.getRol().nombre)) {
       return Result.failure(
-        'El usuario debe tener el rol de colaborador para completar sus datos',
+        'El usuario debe tener rol de colaborador, administrador o recepcionista',
       );
     }
 

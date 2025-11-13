@@ -56,17 +56,6 @@ export class ColaboradorController {
     return result.value;
   }
 
-  @Get(':id')
-  async obtenerColaboradorPorId(@Param('id') id: string) {
-    const result = await this.obtenerColaboradorPorIdUseCase.ejecutar(id);
-
-    if (!result.ok) {
-      throw new BadRequestException(result.message);
-    }
-
-    return result.value;
-  }
-
   @ApiBearerAuth('JWT-auth')
   @UseGuards(AuthGuard('jwt'))
   @Get('me')
@@ -94,6 +83,19 @@ export class ColaboradorController {
     };
   }
 
+
+  @Get(':id')
+  async obtenerColaboradorPorId(@Param('id') id: string) {
+    const result = await this.obtenerColaboradorPorIdUseCase.ejecutar(id);
+
+    if (!result.ok) {
+      throw new BadRequestException(result.message);
+    }
+
+    return result.value;
+  }
+
+  
   @Put(':id')
   async actualizarColaborador(
     @Param('id') id: string,

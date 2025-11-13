@@ -7,6 +7,7 @@ import { CompletarDatosPacienteUseCase } from "./application/uses-cases/completa
 import { PACIENTE_REPOSITORY } from "./infrastructure/paciente.repository.token";
 import { PacienteRepositoryImpl } from "./infrastructure/repositories/paciente.repository.impl";
 import { ObtenerPerfilPaciente } from "./application/uses-cases/obtener-perfil-paciente-use-case";
+import { ListarPacientesUseCase } from "./application/uses-cases/listar-pacientes.use-case";
 
 
 @Module({
@@ -15,6 +16,7 @@ import { ObtenerPerfilPaciente } from "./application/uses-cases/obtener-perfil-p
     providers: [
         CompletarDatosPacienteUseCase,
         ObtenerPerfilPaciente,
+        ListarPacientesUseCase,
         {
             provide: PACIENTE_REPOSITORY,
             useClass: PacienteRepositoryImpl

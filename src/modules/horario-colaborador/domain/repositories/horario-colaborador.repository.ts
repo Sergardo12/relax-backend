@@ -7,10 +7,7 @@ export interface HorarioColaboradorRepository {
   findAll(): Promise<Result<HorarioColaborador[]>>;
   findById(id: string): Promise<Result<HorarioColaborador>>;
   findByColaboradorId(idColaborador: string): Promise<Result<HorarioColaborador[]>>;
-  findByColaboradorAndDia(
-    idColaborador: string,
-    diaSemana: DiaSemana,
-  ): Promise<Result<HorarioColaborador[]>>;
+  findByColaboradorAndDia(idColaborador: string,diaSemana: DiaSemana): Promise<Result<HorarioColaborador[]>>;
   update(id: string, horario: HorarioColaborador): Promise<Result<HorarioColaborador>>;
   delete(id: string): Promise<Result<void>>;
 }

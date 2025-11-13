@@ -59,7 +59,7 @@ export class Colaborador {
         return this.usuario;
     }
 
-    getEspecialidad(): Especialidad {
+    getEspecialidad(): Especialidad{
         return this.especialidad;
     }
 
