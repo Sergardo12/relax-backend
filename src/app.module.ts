@@ -38,17 +38,32 @@ import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.mod
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('DATABASE_HOST') || 'localhost',
-        port: parseInt(configService.get('DATABASE_PORT') || '5432'),
-        username: configService.get('DATABASE_USER') || 'postgres',
-        password: configService.get('DATABASE_PASSWORD') || 'postgres',
-        database: configService.get('DATABASE_NAME') || 'relaxdb',
-        autoLoadEntities: true,
-        synchronize: configService.get('NODE_ENV') !== 'production', 
-        ssl: configService.get('NODE_ENV') === 'production' ? { rejectUnauthorized: false } : false,
-      }),
+      useFactory: (configService: ConfigService) =>{
+      const databaseUrl = configService.get('DATABASE_URL');
+       if (databaseUrl) {
+          // 🚀 PRODUCCIÓN (Render con Supabase)
+          return {
+            type: 'postgres' as const,
+            url: databaseUrl,
+            autoLoadEntities: true,
+            synchronize: false, // ⚠️ Nunca true en producción
+            ssl: { rejectUnauthorized: false },
+          };
+        } else {
+          // 💻 DESARROLLO (Local)
+          return {
+            type: 'postgres' as const,
+            host: configService.get('DATABASE_HOST') || 'localhost',
+            port: parseInt(configService.get('DATABASE_PORT') || '5432'),
+            username: configService.get('DATABASE_USER') || 'postgres',
+            password: configService.get('DATABASE_PASSWORD') || 'postgres',
+            database: (configService.get('DATABASE_NAME') || 'relaxdb') as string, // ⭐ Agregar 'as string'
+            autoLoadEntities: true,
+            synchronize: true,
+            ssl: false,
+          };
+        }
+      },
       inject:[ConfigService],
     }),
     AuthModule,
