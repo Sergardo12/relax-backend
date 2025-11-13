@@ -1,0 +1,1 @@
+export const DETALLE_GASTO_REPOSITORY = Symbol('DetalleGastoRepository');
