@@ -58,6 +58,7 @@ export class ConsumoBeneficio {
     return this.cantidadDisponible;
   }
 
+
   // Métodos de negocio
   consumir(cantidad: number = 1): boolean {
     if (this.cantidadDisponible < cantidad) {

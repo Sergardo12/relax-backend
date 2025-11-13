@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Delete, Body, Param, HttpException, HttpStatus } from '@nestjs/common';
+import { Controller, Post, Get, Put, Delete, Body, Param, HttpException, HttpStatus, BadRequestException } from '@nestjs/common';
 import { CrearTratamientoUseCase } from '../application/use-cases/crear-tratamiento.use-case';
 import { ObtenerTratamientoUseCase } from '../application/use-cases/obtener-tratamiento.use-case';
 import { ActualizarTratamientoUseCase } from '../application/use-cases/actualizar-tratamiento.use-case';
@@ -6,6 +6,7 @@ import { CancelarTratamientoUseCase } from '../application/use-cases/cancelar-tr
 import { CrearTratamientoDto } from '../infrastructure/dto/crear-tratamiento.dto';
 import { ActualizarTratamientoDto } from '../infrastructure/dto/actualizar-tratamiento.dto';
 import { ListarTratamientosPacienteUseCase } from '../application/use-cases/listar-tratamientos-paciente.use-case';
+import { ListarTratamientosUseCase } from '../application/use-cases/listar-tratamientos.use-case';
 
 @Controller('tratamientos')
 export class TratamientoController {
@@ -15,6 +16,7 @@ export class TratamientoController {
     private readonly listarTratamientosPacienteUseCase: ListarTratamientosPacienteUseCase,
     private readonly actualizarTratamientoUseCase: ActualizarTratamientoUseCase,
     private readonly cancelarTratamientoUseCase: CancelarTratamientoUseCase,
+    private readonly listarTratamientosUseCase: ListarTratamientosUseCase
   ) {}
 
   @Post()
@@ -26,6 +28,15 @@ export class TratamientoController {
     }
 
     return result.value.toJSON();
+  }
+
+  @Get()
+  async listarTratamientos(){
+    const result = await this.listarTratamientosUseCase.ejecutar()
+    if(!result.ok){
+      throw new HttpException(result.message, HttpStatus.NOT_FOUND)
+    }
+    return result.value
   }
 
   @Get(':id')

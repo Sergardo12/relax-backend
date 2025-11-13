@@ -13,6 +13,7 @@ import { ObtenerTratamientoUseCase } from "./application/use-cases/obtener-trata
 import { ListarTratamientosPacienteUseCase } from "./application/use-cases/listar-tratamientos-paciente.use-case";
 import { ActualizarTratamientoUseCase } from "./application/use-cases/actualizar-tratamiento.use-case";
 import { CancelarTratamientoUseCase } from "./application/use-cases/cancelar-tratamiento.use-case";
+import { ListarTratamientosUseCase } from "./application/use-cases/listar-tratamientos.use-case";
 
 @Module({
     imports: [TypeOrmModule.forFeature([TratamientoOrmEntity]),
@@ -30,7 +31,8 @@ import { CancelarTratamientoUseCase } from "./application/use-cases/cancelar-tra
         ObtenerTratamientoUseCase,
         ListarTratamientosPacienteUseCase,
         ActualizarTratamientoUseCase,
-        CancelarTratamientoUseCase
+        CancelarTratamientoUseCase,
+        ListarTratamientosUseCase
     ],
     exports: [TRATAMIENTO_REPOSITORY_TOKEN, TratamientoService],
 })

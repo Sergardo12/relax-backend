@@ -173,7 +173,8 @@ export class Tratamiento {
             paciente: { 
                 id: this.paciente.getId() , 
                 nombre: this.paciente.getNombres(), 
-                apellido: this.paciente.getApellidos() 
+                apellido: this.paciente.getApellidos(),
+                dni: this.paciente.getDni()
             },  
             fechaInicio: this.fechaInicio,
             diagnostico: this.diagnostico,
