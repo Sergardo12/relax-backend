@@ -21,9 +21,20 @@ import { BeneficioMembresianModule } from './modules/beneficio-membresia/benefic
 import { ConsumoBeneficioModule } from './modules/consumo-beneficio/consumo-beneficio.module';
 import { UsuarioModule } from './modules/usuario/usuario.module';
 import { RolModule } from './modules/rol/rol.module';
+import { ChatbotModule } from './modules/chatbot/chatbot.module';
+import { ScheduleModule } from '@nestjs/schedule';
+import { NotificacionModule } from './modules/notificacion/notificacion.module';
+import { ProductoModule } from './modules/producto/producto.module';
+import { ProveedorProductoModule } from './modules/proveedor-producto/proveedor-producto.module';
+import { CompraProductoModule } from './modules/compra-producto/compra-producto.module';
+import { VentaProductoModule } from './modules/venta-producto/venta-producto.module';
+import { ProveedorInsumoModule } from './modules/proveedor-insumo/proveedor-insumo.module';
+import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.module';
+
 
 @Module({
   imports: [
+    ScheduleModule.forRoot(),
     ConfigModule.forRoot({ isGlobal: true }),
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -53,6 +64,14 @@ import { RolModule } from './modules/rol/rol.module';
     SuscripcionModule,
     ConsumoBeneficioModule,
     PagoSuscripcionModule,
+    ChatbotModule,
+    NotificacionModule,
+    ProductoModule,
+    ProveedorProductoModule,
+    CompraProductoModule,
+    VentaProductoModule,
+    ProveedorInsumoModule,
+    RegistroGastoModule
   ],
   controllers: [AppController],
   providers: [AppService],
