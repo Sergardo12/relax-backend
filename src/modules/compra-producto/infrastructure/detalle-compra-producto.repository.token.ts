@@ -1,0 +1,1 @@
+export const DETALLE_COMPRA_PRODUCTO_REPOSITORY = Symbol('DetalleCompraProductoRepository');
