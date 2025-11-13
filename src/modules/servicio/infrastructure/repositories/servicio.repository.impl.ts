@@ -68,6 +68,23 @@ export class ServicioRepositoryImpl implements ServicioRepository{
     
   }
 
+  async findByEspecialdad(id: string): Promise<Result<Servicio[]>> {
+  try {
+    const servicios = await this.servicioRepository.find({
+      where: { 
+        especialidad: { id },
+        estado: EstadoServicio.ACTIVO
+      },
+      relations: ["especialidad"]
+    });
+
+    return Result.success(servicios.map(s => ServicioMapper.toDomain(s)));
+  } catch (error) {
+    return Result.failure("Error al obtener los servicios por especialidad", error);
+  }
+}
+
+
   // ✅ Actualizar servicio
   async update(
     id: string,

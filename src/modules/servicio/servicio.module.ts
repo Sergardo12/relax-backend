@@ -6,11 +6,13 @@ import { ServicioController } from "./presentation/servicio.controller";
 import { SERVICIO_REPOSITORY } from "./infrastructure/servicio.repository.token";
 import { ServicioRepositoryImpl } from "./infrastructure/repositories/servicio.repository.impl";
 import { CrearServicioUseCase } from "./application/use-case/crear-servicio.use-case";
+import { ObtenerServicioPorEspecialidadUseCase } from "./application/use-case/obtener-servicio-por-especialidad.use-case";
 
 @Module({
     imports:[TypeOrmModule.forFeature([ServicioOrmEntity]), EspecialidadModule],
     controllers: [ServicioController],
     providers:[CrearServicioUseCase,
+        ObtenerServicioPorEspecialidadUseCase,
         {
             provide: SERVICIO_REPOSITORY,
             useClass: ServicioRepositoryImpl

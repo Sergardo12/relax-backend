@@ -6,6 +6,7 @@ export interface ServicioRepository{
       findAll(): Promise<Result<Servicio[]>>;
       findById(id: string): Promise<Result<Servicio>>;
       findByName(nombre: string): Promise<Result<Servicio>>
+      findByEspecialdad(id: string): Promise<Result<Servicio[]>>
       update(id: string, nuevosDatos: Partial<Servicio>): Promise<Result<Servicio>>;
       delete(id: string): Promise<Result<Servicio>>;
 
