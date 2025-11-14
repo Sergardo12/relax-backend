@@ -80,8 +80,8 @@ export class CrearColaboradorUseCase {
     }
 
     // 7. Convertir fechas de string a Date
-    const fechaNacimiento = new Date(fechaNacimientoString);
-    const fechaContratacion = new Date(fechaContratacionString);
+    const fechaNacimiento = new Date(fechaNacimientoString + 'T12:00:00');
+    const fechaContratacion = new Date(fechaContratacionString + 'T12:00:00');
 
     // 8. Validar edad mínima (18 años)
     if (!this.colaboradorService.validarEdadMinima(fechaNacimiento)) {
