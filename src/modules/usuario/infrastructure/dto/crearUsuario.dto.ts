@@ -15,7 +15,4 @@ export class CrearUsuarioDTO{
     @IsString()
     rolId: string;
 
-    @IsNotEmpty()
-    @IsString()
-    estado: string;
 }
