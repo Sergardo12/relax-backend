@@ -50,13 +50,14 @@ export class CrearTratamientoUseCase {
         }
         cita = citaResult.value ?? undefined; // se reasigna
       }
+      const fechaInicio = new Date(dto.fechaInicio + 'T12:00:00')
 
       // 4. Crear entidad de dominio
       const tratamiento = new Tratamiento({
         cita,
         colaborador,
         paciente,
-        fechaInicio: new Date(dto.fechaInicio + 'T12:00:00'),
+        fechaInicio: fechaInicio,
         diagnostico: dto.diagnostico,
         tratamiento: dto.tratamiento,
         presionArterial: dto.presionArterial,

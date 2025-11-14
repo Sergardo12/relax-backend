@@ -50,11 +50,12 @@ export class CrearSesionTratamientoUseCase {
         `El tratamiento ya tiene ${tratamiento.getSesionesTotales()} sesiones programadas. No se pueden agregar más.`
       );
     }
+    const fechaSesion = new Date(dto.fecha + 'T12:00:00')
 
       // 4. Crear la sesión
       const sesion = new SesionTratamiento({
         tratamiento,
-        fecha: new Date(dto.fecha + 'T12:00:00'),
+        fecha:fechaSesion ,
         hora: dto.hora,
         observaciones: dto.observaciones,
       });
