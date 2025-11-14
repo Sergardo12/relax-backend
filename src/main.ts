@@ -28,7 +28,7 @@ async function bootstrap() {
 
   // Configuracion de cors
   app.enableCors({
-    origin: 'http://localhost:3001', // esta es la url del frontend (nextJs)
+    origin: 'https://relax-frontend.vercel.app', 
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     allowedHeaders:['Content-Type', 'Authorization'],

@@ -30,6 +30,7 @@ import { CompraProductoModule } from './modules/compra-producto/compra-producto.
 import { VentaProductoModule } from './modules/venta-producto/venta-producto.module';
 import { ProveedorInsumoModule } from './modules/proveedor-insumo/proveedor-insumo.module';
 import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.module';
+import { error } from 'console';
 
 
 @Module({
@@ -40,14 +41,16 @@ import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.mod
       imports: [ConfigModule],
       useFactory: (configService: ConfigService) =>{
       const databaseUrl = configService.get('DATABASE_URL');
+      const nodeEnv = configService.get('NODE_ENV');
        if (databaseUrl) {
           // 🚀 PRODUCCIÓN (Render con Supabase)
           return {
             type: 'postgres' as const,
             url: databaseUrl,
             autoLoadEntities: true,
-            synchronize: false, // ⚠️ Nunca true en producción
+            synchronize: nodeEnv !== 'production', // ⚠️ true en development, false en production
             ssl: { rejectUnauthorized: false },
+            logging: nodeEnv === 'development' ? ['query', 'error'] : false, // Ver queries en dev
           };
         } else {
           // 💻 DESARROLLO (Local)
@@ -60,7 +63,7 @@ import { RegistroGastoModule } from './modules/registro-gasto/registro-gasto.mod
             database: (configService.get('DATABASE_NAME') || 'relaxdb') as string, // ⭐ Agregar 'as string'
             autoLoadEntities: true,
             synchronize: true,
-            ssl: false,
+            ssl:false
           };
         }
       },
